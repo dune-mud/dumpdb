@@ -6,6 +6,13 @@ import (
 	"os"
 )
 
+// goreleaser updates these at build time. These are the defaults used
+// for a native Go build with no ldflags overrides.
+var (
+	version = "dev"
+	commit  = "unknown"
+)
+
 // errPrint prints a formatted message to stderr and exits non-zero.
 func errPrint(msg string, args ...interface{}) {
 	fmt.Fprintf(os.Stderr, "ERROR: "+msg, args...)
@@ -20,7 +27,13 @@ func infoPrint(msg string, args ...interface{}) {
 func main() {
 	dbFile := flag.String("db", "OBJ_DUMP.sqlite", "SQLite Database file path to populate")
 	forceFlag := flag.Bool("force", false, "Add OBJ_DUMP data to an existing database")
+	versionFlag := flag.Bool("version", false, "Print the version and quit")
 	flag.Parse()
+
+	if *versionFlag {
+		infoPrint("dumpdb version %s - commit %s\n", version, commit)
+		os.Exit(0)
+	}
 
 	if _, err := os.Stat(*dbFile); err == nil && !(*forceFlag) {
 		errPrint(
