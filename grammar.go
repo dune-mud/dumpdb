@@ -46,7 +46,7 @@ type Object struct {
 	// Ticks is the number of execution ticks spent in this object.
 	Ticks int ` "(" @Int ")"`
 	// SwapStatus is a string describing the swap status (if any).
-	SwapStatus string ` ("PROG SWAPPED"|"VAR SWAPPED"|"SWAPPED")? `
+	SwapStatus string ` @("PROG" "SWAPPED"|"VAR" "SWAPPED"|"SWAPPED")? `
 	// The time the object was created.
 	Created string ` @Date `
 }
