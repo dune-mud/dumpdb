@@ -80,7 +80,7 @@ git clone https://github.com/dune-mud/dumpdb.git && cd dumpdb
 ```
 * Build and install
 ```bash
-go install ./...
+go install -ldflags "-X main.commit=$(git rev-parse HEAD)" ./...
 ```
 * Run the `dumpdb` executable from your Go bin.
 ```bash
