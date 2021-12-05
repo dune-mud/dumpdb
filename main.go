@@ -19,7 +19,14 @@ func infoPrint(msg string, args ...interface{}) {
 
 func main() {
 	dbFile := flag.String("db", "OBJ_DUMP.sqlite", "SQLite Database file path to populate")
+	forceFlag := flag.Bool("force", false, "Add OBJ_DUMP data to an existing database")
 	flag.Parse()
+
+	if _, err := os.Stat(*dbFile); err == nil && !(*forceFlag) {
+		errPrint(
+			"db %q exists and -force was not specified. Remove the database or add -force\n",
+			*dbFile)
+	}
 
 	// Open the database.
 	db, err := openDB(*dbFile)
