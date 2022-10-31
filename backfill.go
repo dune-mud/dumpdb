@@ -10,10 +10,10 @@ import (
 func backfill(objDump io.Reader, db *database) (int, error) {
 	// Build a parser with our AST and lexer
 	parser := participle.MustBuild(
-		&ObjectDump{},
+		&ObjectDump{Objects: nil},
 		participle.Lexer(objDumpLexer))
 
-	ast := &ObjectDump{}
+	ast := &ObjectDump{Objects: nil}
 
 	infoPrint("Parsing OBJ_DUMP into AST\n")
 

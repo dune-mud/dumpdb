@@ -44,7 +44,7 @@ func openDB(path string) (*database, error) {
 }
 
 func (db database) Close() error {
-	return db.db.Close()
+	return fmt.Errorf("closing db: %w", db.db.Close())
 }
 
 func (db database) Insert(obs []*Object) error {
@@ -79,5 +79,9 @@ func (db database) Insert(obs []*Object) error {
 		}
 	}
 
-	return tx.Commit()
+	if err := tx.Commit(); err != nil {
+		return fmt.Errorf("committing txn: %w", err)
+	}
+
+	return nil
 }
