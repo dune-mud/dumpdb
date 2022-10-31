@@ -10,6 +10,13 @@ linters:
   enable-all: true
   disable:
     - gofumpt
+    - golint
+    - nosnakecase
+    - varcheck
+    - deadcode
+    - structcheck
+    - ifshort
+    - interfacer
     - testpackage
     - gochecknoglobals
     - maligned
@@ -19,3 +26,6 @@ linters:
     - gochecknoinits
     - gocritic
     - scopelint
+    - varnamelen
+    - gofmt      # TODO(XXX): remove once built with Go 1.19
+    - nolintlint # TODO(XXX): remove once built with Go 1.19
