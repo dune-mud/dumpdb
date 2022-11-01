@@ -19,6 +19,7 @@ in pkgs.mkShell {
   packages = [
     goEnv
     runCILocally
+    pkgs.gotools
     pkgs.gomod2nix
     pkgs.golangci-lint
     pkgs.goreleaser
