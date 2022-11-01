@@ -10,7 +10,7 @@ let
 
   runCILocally = pkgs.writeScriptBin "ci-local" ''
     echo "Linting..."
-    golangci-lint run --version --verbose .
+    golangci-lint run --verbose .
     echo "Building..."
     nix build
   '';
