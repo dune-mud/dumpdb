@@ -3,6 +3,7 @@ package main
 import "github.com/alecthomas/participle/v2/lexer"
 
 // objDumpLexer describes the lexical elements in the OBJ_DUMP file.
+//
 // nolint: govet
 var objDumpLexer = lexer.MustSimple([]lexer.Rule{
 	// Filenames start with a letter, a slash, or on Dune, an @ for virtual stuff.
@@ -18,6 +19,7 @@ var objDumpLexer = lexer.MustSimple([]lexer.Rule{
 })
 
 // ObjectDump instances are zero or more Objects.
+//
 // nolint: govet
 type ObjectDump struct {
 	Objects []*Object `@@*`
@@ -25,6 +27,7 @@ type ObjectDump struct {
 
 // Object instances describe traits of a dumped object.
 // See `man dump_driver_info` and the description of DDI_OBJECTS for more.
+//
 // nolint: govet
 type Object struct {
 	// Name is the object's name.

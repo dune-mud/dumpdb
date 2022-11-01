@@ -1,0 +1,52 @@
+# Lint and build with the Nix flake.
+name: Nix Build
+
+on:
+  push:
+    branches:
+      - main
+      - "test-*"
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check_nix:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v3
+      - name: Install Nix
+        uses: cachix/install-nix-action@v18
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: GolangCI Lint
+        run: |
+          nix develop --command \
+            golangci-lint --version
+          nix develop --command \
+            golangci-lint run --verbose --out-format=github-actions
+
+  build_and_test_nix:
+    name: Test and build
+    needs: check_nix
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v3
+      - name: Install Nix
+        uses: cachix/install-nix-action@v18
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - name: Test
+        run: |
+          nix develop --command \
+            go test -v -race ./...
+      - name: Build
+        run: nix build
