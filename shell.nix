@@ -16,6 +16,7 @@ let
   '';
 
 in pkgs.mkShell {
+  shellHook = "unset GOROOT; unset GOPATH;";
   packages = [
     goEnv
     runCILocally
